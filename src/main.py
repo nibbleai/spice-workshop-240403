@@ -9,7 +9,6 @@ def main():
 
     train_data, test_data = train_test_split(data)
 
-    resources = ...  # TO IMPLEMENT
     train_features = ...  # TO IMPLEMENT
     test_features = ...  # TO IMPLEMENT
 
