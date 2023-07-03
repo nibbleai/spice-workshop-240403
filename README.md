@@ -10,23 +10,24 @@
     source .venv/bin/activate
     ```
     
-2. Install dependencies
+1. Install project and dependencies
     ```bash
     # 'EXTRA_INDEX_URL' will be provided.
     python -m pip install -r requirements.txt --extra-index-url=${EXTRA_INDEX_URL}
+    python -m pip install -e .
     ```
 
-3. Initialize spice store (Needs to be done only once)
+2. Initialize spice store (Needs to be done only once)
     ```
-    spice init store
+    spice store init
     ```
 
-4. Run the demo
+3. Run the demo
     ```bash
     python -m src.main
     ```
 
-5. Check the UI
+4. Check the UI
     ```bash
     spice ui
     ```
