@@ -40,7 +40,9 @@ def get_weather_data():
 
 def train_test_split(data):
     return _train_test_split(
-        data.sort_values(TaxiColumn.PICKUP_TIME), test_size=config.test_size
+        data.sort_values(TaxiColumn.PICKUP_TIME),
+        test_size=config.test_size,
+        shuffle=False
     )
 
 
