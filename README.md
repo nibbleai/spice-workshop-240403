@@ -2,24 +2,31 @@
 
 ## How to run the demo
 
+**⚠️ You need Python >= 3.8**
 
-1. Install dependencies
+0. Create a virtual env, and activate
+    ```bash
+    python -m venv .venv
+    source .venv/bin/activate
+    ```
+    
+2. Install dependencies
     ```bash
     # 'EXTRA_INDEX_URL' will be provided.
-    pip install -r requirements.txt --extra-index-url=${EXTRA_INDEX_URL}
+    python -m pip install -r requirements.txt --extra-index-url=${EXTRA_INDEX_URL}
     ```
 
-2. Initialize spice store (Needs to be done only once)
+3. Initialize spice store (Needs to be done only once)
     ```
     spice init store
     ```
 
-3. Run the demo
+4. Run the demo
     ```bash
     python -m src.main
     ```
 
-4. Check the UI
+5. Check the UI
     ```bash
     spice ui
     ```
