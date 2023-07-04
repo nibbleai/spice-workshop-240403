@@ -4,3 +4,4 @@ ydata-profiling==4.6.1
 spice[full]
 httpx
 folium==0.15.1
+pytest==5.2.1
