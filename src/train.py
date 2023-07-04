@@ -28,8 +28,6 @@ def main():
             "is_raining",
             "euclidean_distance",
             "manhattan_distance",
-            "pickup_cluster",
-            "dropoff_cluster"
         ]
     )
     train_features = feature_generator.fit_transform(train_data)

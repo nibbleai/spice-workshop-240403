@@ -10,8 +10,6 @@ class _Config:
 
         self.features = SimpleNamespace(
             hours_bins=4,
-            pickup_n_clusters=4,
-            dropoff_n_clusters=4,
         )
 
 
