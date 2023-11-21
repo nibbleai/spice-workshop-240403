@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import OneHotEncoder
 
 from src.config import config
 from src.features.registry import registry
@@ -13,13 +14,19 @@ from . import logger
 @registry.register(name="pickup_time")
 def pickup_time(data):
     """Time of pickup."""
-    return data[TaxiColumn.PICKUP_TIME]
+    return data.loc[:, TaxiColumn.PICKUP_TIME]
 
 
 @registry.register(name="pickup_date", depends=["pickup_time"])
 def pickup_date(pickup_time):
     """Date of pickup."""
     return pickup_time.dt.date
+
+
+@registry.register(name="pickup_week_day", depends=["pickup_time"])
+def pickup_week_day(pickup_time):
+    """Week day of pickup."""
+    return pickup_time.dt.dayofweek
 
 
 @registry.register(name="pickup_hour", depends=["pickup_time"])
@@ -47,10 +54,41 @@ class QuantileBinHour:
         hours_bins = pd.qcut(pickup_hour, q=config.features["hours_bins"])
         logger.info(f"Intervals for bins are: {hours_bins.cat.categories}")
         self.bins_ = hours_bins.cat.categories
-        return self
 
     def transform(self, pickup_hour):
         quantile_bin_hours = pd.cut(pickup_hour, bins=self.bins_)
         hours_bins_labels = np.arange(config.features["hours_bins"]) + 1
 
         return quantile_bin_hours.cat.rename_categories(hours_bins_labels)
+
+
+@registry.register(
+    name="is_rush_hour", depends=["pickup_hour", "pickup_week_day"]
+)
+def is_rush_hour(pickup_hour, pickup_week_day):
+    """
+    Is trip happening during rush hour (4pm to 8pm on weekdays).
+
+    Rush hour is defined by NYC Taxi & Limousine Commission:
+    https://www.nyc.gov/site/tlc/passengers/taxi-fare.page
+    """
+    return (
+        (pickup_hour >= 16) &
+        (pickup_hour <= 20) &
+        (pickup_week_day >= 0) &
+        (pickup_week_day <= 4)
+    )
+
+
+@registry.register(name="[encoded]_rush_hour", depends=["is_rush_hour"])
+class EncodedRushHour:
+    def fit(self, is_rush_hour):
+        self.encoder_ = OneHotEncoder().fit(is_rush_hour.values.reshape(-1, 1))
+        return self
+
+    def transform(self, is_rush_hour):
+        return (
+            self.encoder_
+            .transform(is_rush_hour.values.reshape(-1, 1))
+            .toarray()
+        )

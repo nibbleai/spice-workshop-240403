@@ -27,9 +27,10 @@ def main():
         features=[
             "cyclical_pickup_hour",
             "quantile_bin_hour",
+            "[encoded]_rush_hour",
             "is_raining",
-            "euclidean_distance",
-            "manhattan_distance",
+            "[scaled]_euclidean_distance",
+            "[scaled]_manhattan_distance",
         ]
     )
     train_features = feature_generator.fit_transform(train_data).to_pandas()
