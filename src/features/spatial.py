@@ -2,15 +2,6 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 
 from src.features.registry import registry
-from src.schemas import TaxiColumn
-
-for col, name in [
-    (TaxiColumn.PICKUP_LON, "pickup_lon"),
-    (TaxiColumn.PICKUP_LAT, "pickup_lat"),
-    (TaxiColumn.DROPOFF_LON, "dropoff_lon"),
-    (TaxiColumn.DROPOFF_LAT, "dropoff_lat"),
-]:
-    registry.register(lambda data, col=col: data.loc[:, col], name=name)
 
 
 @registry.register(

@@ -4,7 +4,7 @@ from spice import Generator
 
 from src.data import get_train_dataset, get_target, train_test_split
 from src.features.registry import registry
-from src.features import spatial, temporal, weather
+from src.features import base, spatial, temporal, weather
 from src.preprocessing import preprocess
 from src.model import get_model, evaluate
 from src.resources import get_resources

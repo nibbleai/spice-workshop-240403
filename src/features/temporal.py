@@ -6,15 +6,8 @@ from src.config import config
 from src.features.registry import registry
 from src.features.utils import cyclical
 from src.invariants import HOURS_IN_DAY
-from src.schemas import TaxiColumn
 
 from . import logger
-
-
-@registry.register(name="pickup_time")
-def pickup_time(data):
-    """Time of pickup."""
-    return data.loc[:, TaxiColumn.PICKUP_TIME]
 
 
 @registry.register(name="pickup_date", depends=["pickup_time"])
