@@ -14,8 +14,8 @@ def main():
     train_target = target.loc[train_data.index]
     test_target = target.loc[test_data.index]
 
-    train_features = train_data['trip_distance'].to_frame()  # TO IMPLEMENT
-    test_features = test_data['trip_distance'].to_frame()  # TO IMPLEMENT
+    train_features = ...  # TO IMPLEMENT
+    test_features = ...  # TO IMPLEMENT
 
     logging.info("Training model...")
     model = get_model().fit(train_features, train_target)
