@@ -1,8 +1,6 @@
 import logging
 
 from spice import Generator
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
 
 from src.data import get_train_dataset, get_target, train_test_split
 from src.features.registry import registry
