@@ -1,4 +1,3 @@
-import httpx
 import pandas as pd
 from sklearn.model_selection import train_test_split as _train_test_split
 
@@ -21,9 +20,7 @@ def get_weather_data():
     return pd.read_csv(
         directories.weather_data_dir / WEATHER_DATA_FILENAME,
         parse_dates=[WeatherColumn.DATE]
-    ).assign(**{
-        WeatherColumn.DATE: lambda x: x[WeatherColumn.DATE].dt.date
-    })
+    ).assign(**{WeatherColumn.DATE: lambda x: x[WeatherColumn.DATE].dt.date})
 
 
 def train_test_split(data):
