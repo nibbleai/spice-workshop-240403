@@ -1,12 +1,12 @@
 import logging
 
-from src.data import get_dataset, get_target, train_test_split
+from src.data import get_train_dataset, get_target, train_test_split
 from src.preprocessing import preprocess
 from src.model import get_model, evaluate
 
 
 def main():
-    data = get_dataset()
+    data = get_train_dataset()
     target = get_target(data)
     data, target = preprocess(data, target)
 

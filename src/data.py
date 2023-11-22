@@ -5,13 +5,22 @@ from src.config import config
 from src.directories import directories
 from src.schemas import TaxiColumn, WeatherColumn
 
-TAXI_DATA_FILENAME = 'nyc-taxi-2015.csv'
+TRAIN_TAXI_DATA_FILENAME = 'train-2015.csv'
+LIVE_TAXI_DATA_FILENAME = 'live-2015.csv'
 WEATHER_DATA_FILENAME = 'nyc-weather-2015.csv'
 
 
-def get_dataset():
+def get_train_dataset():
+    return _get_dataset(TRAIN_TAXI_DATA_FILENAME)
+
+
+def get_live_dataset():
+    return _get_dataset(LIVE_TAXI_DATA_FILENAME)
+
+
+def _get_dataset(filename):
     return pd.read_csv(
-        directories.taxi_data_dir / TAXI_DATA_FILENAME,
+        directories.taxi_data_dir / filename,
         parse_dates=[TaxiColumn.PICKUP_TIME, TaxiColumn.DROPOFF_TIME]
     )
 
