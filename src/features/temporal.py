@@ -37,9 +37,7 @@ def cyclical_pickup_hour(pickup_hour):
     return cyclical(pickup_hour, cycle_length=HOURS_IN_DAY)
 
 
-@registry.register(
-    name="quantile_bin_hour", depends=["pickup_hour"]
-)
+@registry.register(name="quantile_bin_hour", depends=["pickup_hour"])
 class QuantileBinHour:
     """Quantile-based hour range of the pickup."""
 
@@ -47,6 +45,7 @@ class QuantileBinHour:
         hours_bins = pd.qcut(pickup_hour, q=config.features["hours_bins"])
         logger.info(f"Intervals for bins are: {hours_bins.cat.categories}")
         self.bins_ = hours_bins.cat.categories
+        return self
 
     def transform(self, pickup_hour):
         quantile_bin_hours = pd.cut(pickup_hour, bins=self.bins_)
