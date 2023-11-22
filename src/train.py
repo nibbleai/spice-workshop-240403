@@ -5,6 +5,7 @@ from spice import Generator
 from src.data import get_train_dataset, get_target, train_test_split
 from src.features.registry import registry
 from src.features import base, spatial, temporal, weather
+from src.io_ import save_generator, save_model
 from src.preprocessing import preprocess
 from src.model import get_model, evaluate
 from src.resources import get_resources
@@ -34,6 +35,7 @@ def main():
         ]
     )
     train_features = feature_generator.fit_transform(train_data).to_pandas()
+
     test_features = feature_generator.transform(test_data).to_pandas()
 
     logging.info("Training model...")
@@ -48,6 +50,12 @@ def main():
 
     metrics = evaluate(model, features=test_features, target=test_target)
     logger.info(f"Model metrics are:\n{metrics}")
+
+    logging.info("Saving generator...")
+    save_generator(feature_generator)
+
+    logging.info("Saving model...")
+    save_model(model)
 
 
 if __name__ == '__main__':

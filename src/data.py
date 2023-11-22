@@ -20,6 +20,13 @@ def get_train_dataset():
     )
 
 
+def get_live_dataset():
+    return pd.read_csv(
+        directories.taxi_data_dir / LIVE_TAXI_DATA_FILENAME,
+        parse_dates=[TaxiColumn.PICKUP_TIME]
+    )
+
+
 def get_weather_data():
     return pd.read_csv(
         directories.weather_data_dir / WEATHER_DATA_FILENAME,
