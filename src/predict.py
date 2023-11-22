@@ -13,7 +13,11 @@ def main():
     generator = load_generator()
     generator.resources = get_resources()
 
-    live_features = generator.transform(live_data).to_pandas()
+    live_features = (
+        generator
+        .transform(live_data, tags={'dataset': 'live'})
+        .to_pandas()
+    )
 
     logging.info("Loading model...")
     model = load_model()

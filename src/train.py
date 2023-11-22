@@ -34,9 +34,17 @@ def main():
             "[scaled]_manhattan_distance",
         ]
     )
-    train_features = feature_generator.fit_transform(train_data).to_pandas()
+    train_features = (
+        feature_generator
+        .fit_transform(train_data, tags={'dataset': 'train'})
+        .to_pandas()
+    )
 
-    test_features = feature_generator.transform(test_data).to_pandas()
+    test_features = (
+        feature_generator
+        .transform(test_data, tags={'dataset': 'test'})
+        .to_pandas()
+    )
 
     logging.info("Training model...")
     model = RandomForestRegressor().fit(train_features, train_target)
