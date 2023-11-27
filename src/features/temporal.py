@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import OneHotEncoder
 
 from src.config import config
 from src.features.registry import registry
@@ -70,17 +69,3 @@ def is_rush_hour(pickup_hour, pickup_week_day):
         (pickup_week_day >= 0) &
         (pickup_week_day <= 4)
     )
-
-
-@registry.register(name="[encoded]_rush_hour", depends=["is_rush_hour"])
-class EncodedRushHour:
-    def fit(self, is_rush_hour):
-        self.encoder_ = OneHotEncoder().fit(is_rush_hour.values.reshape(-1, 1))
-        return self
-
-    def transform(self, is_rush_hour):
-        return (
-            self.encoder_
-            .transform(is_rush_hour.values.reshape(-1, 1))
-            .toarray()
-        )

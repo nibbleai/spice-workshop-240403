@@ -28,10 +28,10 @@ def main():
         features=[
             "cyclical_pickup_hour",
             "quantile_bin_hour",
-            "[encoded]_rush_hour",
             "is_raining",
-            "[scaled]_euclidean_distance",
-            "[scaled]_manhattan_distance",
+            "is_rush_hour",
+            "euclidean_distance",
+            "manhattan_distance",
         ]
     )
     train_features = (
