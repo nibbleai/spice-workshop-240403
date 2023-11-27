@@ -1,7 +1,6 @@
 from src.schemas import TaxiColumn
 from src.features.registry import registry
 
-
 for col_name, feature_name in [
     (TaxiColumn.PICKUP_LON, "pickup_lon"),
     (TaxiColumn.PICKUP_LAT, "pickup_lat"),
