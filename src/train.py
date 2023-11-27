@@ -32,6 +32,8 @@ def main():
             "is_rush_hour",
             "euclidean_distance",
             "manhattan_distance",
+            "pca_pickup",
+            "pca_dropoff"
         ]
     )
     train_features = (

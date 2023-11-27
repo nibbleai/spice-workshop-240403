@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 from src.features.registry import registry
@@ -37,3 +39,26 @@ for distance in ('euclidean_distance', 'manhattan_distance'):
     registry.register(
         ScaledDistance, name=f"[scaled]_{distance}", depends=[distance]
     )
+
+
+class PCACoordinate:
+    """2 components PCA built from coordinates."""
+    def fit(self, longitude, latitude):
+        n_components = 2
+
+        coordinates = pd.concat([longitude, latitude], axis=1)
+        self.pca_ = PCA(n_components=n_components).fit(coordinates)
+
+        return self
+
+    def transform(self, longitude, latitude):
+        coordinates = pd.concat([longitude, latitude], axis=1)
+        return self.pca_.transform(coordinates)
+
+
+PCA_COORDINATES_DEPENDENCIES = {
+    "pca_pickup": ["pickup_lon", "pickup_lat"],
+    "pca_dropoff": ["dropoff_lon", "dropoff_lat"],
+}
+for name, depends in PCA_COORDINATES_DEPENDENCIES.items():
+    registry.register(PCACoordinate, name=name, depends=depends)
