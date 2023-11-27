@@ -4,30 +4,21 @@
 
 **⚠️ You need Python >= 3.8**
 
-0. Create a virtual env, and activate
+0. Log on to [spice documentation](https://spice.ml/docs/get_started/install)
+
+1. Create a virtual env **with Python >= 3.8**, and activate
     ```bash
     python -m venv .venv
     source .venv/bin/activate
     ```
-    
-1. Install project and dependencies
+
+2. Install project and dependencies
+    - You can find the value of `EXTRA_INDEX_URL` on the [documentation](https://spice.ml/docs/get_started/install)
     ```bash
-    # 'EXTRA_INDEX_URL' will be provided.
     python -m pip install -r requirements.txt --extra-index-url=${EXTRA_INDEX_URL}
     python -m pip install -e .
     ```
 
-2. Initialize spice store (Needs to be done only once)
-    ```
-    spice store init
-    ```
+3. [OPTIONAL] Explore the [documentation]((https://spice.ml/docs/get_started/install))
 
-3. Run the demo
-    ```bash
-    python -m src.main
-    ```
-
-4. Check the UI
-    ```bash
-    spice ui
-    ```
+4. Wait for the workshop to start!
