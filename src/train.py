@@ -33,7 +33,9 @@ def main():
             "euclidean_distance",
             "manhattan_distance",
             "pca_pickup",
-            "pca_dropoff"
+            "pca_dropoff",
+            "pickup_cluster",
+            "dropoff_cluster"
         ]
     )
     train_features = (

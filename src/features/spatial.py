@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+from src.config import config
 from src.features.registry import registry
 
 
@@ -62,3 +64,27 @@ PCA_COORDINATES_DEPENDENCIES = {
 }
 for name, depends in PCA_COORDINATES_DEPENDENCIES.items():
     registry.register(PCACoordinate, name=name, depends=depends)
+
+
+class CoordinateCluster:
+    """Kmeans cluster from coordinates."""
+
+    def fit(self, longitude, latitude):
+        n_clusters = config.features['coordinates_clusters']
+
+        self.kmeans_ = KMeans(n_clusters, n_init=10)
+        self.kmeans_.fit(pd.concat([longitude, latitude], axis=1))
+
+        return self
+
+    def transform(self, longitude, latitude):
+        coordinates = pd.concat([longitude, latitude], axis=1)
+        return pd.Categorical(self.kmeans_.predict(coordinates))
+
+
+COORDINATES_CLUSTERS_DEPENDENCIES = {
+    'pickup_cluster': ['pickup_lon', 'pickup_lat'],
+    'dropoff_cluster': ['dropoff_lon', 'dropoff_lat'],
+}
+for name, depends in COORDINATES_CLUSTERS_DEPENDENCIES.items():
+    registry.register(CoordinateCluster, name=name, depends=depends)

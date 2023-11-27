@@ -7,7 +7,10 @@ class _Config:
         self.target = 'trip_duration'
 
         self.features = {
-            "hours_bins": 4
+            "hours_bins": 4,
+            # Ideal number of clusters has been determined
+            # using the elbow method on the taxi dataset
+            "coordinates_clusters": 4,
         }
 
 
