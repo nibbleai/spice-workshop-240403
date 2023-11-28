@@ -8,7 +8,7 @@ from . import logger
 
 
 @registry.register(
-    name="[artifact] weather",
+    name="[artifact]_weather",
     depends=["pickup_date"],
     resources=[Resource.WEATHER],
 )
@@ -29,7 +29,7 @@ def weather(pickup_date, weather_resource):
     ).set_index(pickup_date.index)
 
 
-@registry.register(name="is_raining", depends=["[artifact] weather"])
+@registry.register(name="is_raining", depends=["[artifact]_weather"])
 def is_raining(weather):
     """Is it raining on the day of pickup"""
     return (weather[WeatherColumn.PRECIPITATIONS] > 0).astype(int)
