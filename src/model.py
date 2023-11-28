@@ -1,6 +1,6 @@
 import pandas as pd
 
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_validate, TimeSeriesSplit
 
 __all__ = ['get_model', 'evaluate']
@@ -10,7 +10,7 @@ SCORING = 'neg_mean_squared_log_error'
 
 
 def get_model():
-    return LinearRegression()
+    return RandomForestRegressor()
 
 
 def evaluate(model, *, features, target):
