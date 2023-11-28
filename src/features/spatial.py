@@ -28,6 +28,15 @@ def manhattan_distance(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat):
     return abs(pickup_lon - dropoff_lon) + abs(pickup_lat - dropoff_lat)
 
 
+@registry.register(
+    name="euclidean_manhattan_ratio",
+    depends=["euclidean_distance", "manhattan_distance"]
+)
+def euclidean_manhattan_ratio(euclidean_distance, manhattan_distance):
+    """Ratio of euclidean distance to Manhattan distance."""
+    return (euclidean_distance / manhattan_distance).fillna(0)
+
+
 class ScaledDistance:
     def fit(self, distance):
         self.scaler_ = StandardScaler().fit(distance.values.reshape(-1, 1))

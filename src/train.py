@@ -32,6 +32,7 @@ def main():
             "is_rush_hour",
             "euclidean_distance",
             "manhattan_distance",
+            "euclidean_manhattan_ratio",
             "pca_pickup",
             "pca_dropoff",
             "pickup_cluster",
