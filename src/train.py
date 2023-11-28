@@ -21,7 +21,7 @@ def main():
     model = get_model().fit(train_features, train_target)
 
     metrics = evaluate(model, features=test_features, target=test_target)
-    logging.info(f"Model metrics are: {metrics}")
+    logging.info(f"Model metrics are:\n{metrics}")
 
 
 if __name__ == '__main__':
