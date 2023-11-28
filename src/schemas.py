@@ -2,6 +2,8 @@
 
 from spice.utils import StrEnum
 
+__all__ = ['TaxiColumn', 'WeatherColumn']
+
 
 class TaxiColumn(StrEnum):
     """Column names in the taxi dataset"""
