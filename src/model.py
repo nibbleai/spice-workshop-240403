@@ -1,7 +1,7 @@
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_log_error
 
-__all__ = ['evaluate', 'get_model']
+__all__ = ['get_model', 'evaluate']
 
 
 def get_model():
@@ -10,4 +10,4 @@ def get_model():
 
 def evaluate(model, *, features, target):
     predicted = model.predict(features)
-    return {'mean_absolute_error': mean_absolute_error(target, predicted)}
+    return {'mean_squared_log_error': mean_squared_log_error(target, predicted)}
