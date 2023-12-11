@@ -1,5 +1,6 @@
 import logging
 
+import numpy as np
 from spice import Generator
 
 from src.data import get_train_dataset, get_target
@@ -44,7 +45,11 @@ def main():
         data=data,
         target=target
     )
-    logger.info(f"Model metrics are:\n{metrics}")
+    logger.info(
+        "Model metrics are: "
+        f"mean={np.mean(metrics)} "
+        f"std={np.std(metrics)}"
+    )
 
     logger.info(f"Training model...")
     features_generator, learner = train(
