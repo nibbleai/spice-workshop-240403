@@ -8,11 +8,13 @@ from src.io_ import load_generator, load_model
 from src.resources import get_resources
 from src.schemas import TaxiColumn
 
+logger = logging.getLogger(__name__)
+
 
 def main():
     live_data = get_live_dataset()
 
-    logging.info("Loading features generator...")
+    logger.info("Loading features generator...")
     features_generator = load_generator()
     features_generator.resources = get_resources()
 
@@ -22,14 +24,14 @@ def main():
         .to_pandas()
     )
 
-    logging.info("Loading model...")
-    model = load_model()
+    logger.info("Loading learner...")
+    learner = load_model()
 
-    logging.info("Making predictions")
-    predicted = pd.Series(model.predict(live_features), name="duration")
+    logger.info("Making predictions...")
+    predicted = pd.Series(learner.predict(live_features), name="duration")
 
     trips_with_prediction = pd.concat([live_data, predicted], axis=1)
-    logging.info(
+    logger.info(
         f"Predicted {len(predicted)} trips, spanning from "
         f"{trips_with_prediction[TaxiColumn.PICKUP_TIME].dt.date.min()} to "
         f"{trips_with_prediction[TaxiColumn.PICKUP_TIME].dt.date.max()}:\n"

@@ -44,27 +44,9 @@ def main():
         data=data,
         target=target
     )
-
-    test_features = (
-        feature_generator
-        .transform(test_data, tags={'dataset': 'test'})
-        .to_pandas()
-    )
-
-    logging.info("Training model...")
-    model = RandomForestRegressor().fit(train_features, train_target)
-
-    predicted = model.predict(test_features)
-    m2_score = mean_squared_error(test_target, predicted)
-    logging.info(f"M2 score is {m2_score}")
-
-    logger.info("Training model...")
-    model = get_model().fit(train_features, train_target)
-
-    metrics = evaluate(model, features=test_features, target=test_target)
     logger.info(f"Model metrics are:\n{metrics}")
 
-    logging.info(f"Training model...")
+    logger.info(f"Training model...")
     features_generator, learner = train(
         generator=features_generator,
         learner=learner,
@@ -73,10 +55,10 @@ def main():
         tags={'dataset': 'train'}
     )
 
-    logging.info("Saving generator...")
+    logger.info("Saving generator...")
     save_generator(features_generator)
 
-    logging.info("Saving model...")
+    logger.info("Saving model...")
     save_model(learner)
 
 
