@@ -5,6 +5,8 @@ from src.preprocessing import preprocess
 from src.model import get_model, evaluate
 from src.schemas import TaxiColumn
 
+logger = logging.getLogger(__name__)
+
 
 def main():
     data = get_train_dataset()
@@ -24,11 +26,11 @@ def main():
     train_features = train_data.loc[:, feature_columns]
     test_features = test_data.loc[:, feature_columns]
 
-    logging.info("Training model...")
+    logger.info("Training model...")
     model = get_model().fit(train_features, train_target)
 
     metrics = evaluate(model, features=test_features, target=test_target)
-    logging.info(f"Model metrics are:\n{metrics}")
+    logger.info(f"Model metrics are:\n{metrics}")
 
 
 if __name__ == '__main__':
