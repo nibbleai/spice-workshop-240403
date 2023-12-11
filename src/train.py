@@ -2,27 +2,24 @@ import logging
 
 from spice import Generator
 
-from src.data import get_train_dataset, get_target, train_test_split
+from src.data import get_train_dataset, get_target
 from src.features.registry import registry
 from src.features import base, spatial, temporal, weather
 from src.io_ import save_generator, save_model
 from src.preprocessing import preprocess
-from src.model import get_model, evaluate
+from src.model import cross_validate, get_model, train
 from src.resources import get_resources
+from src.schemas import TaxiColumn
 
 logger = logging.getLogger(__name__)
 
 
 def main():
-    data = get_train_dataset()
+    data = get_train_dataset().sort_values(TaxiColumn.PICKUP_TIME)
     target = get_target(data)
     data, target = preprocess(data, target)
 
-    train_data, test_data = train_test_split(data)
-    train_target = target.loc[train_data.index]
-    test_target = target.loc[test_data.index]
-
-    feature_generator = Generator(
+    features_generator = Generator(
         registry,
         resources=get_resources(),
         features=[
@@ -39,10 +36,13 @@ def main():
             "dropoff_cluster"
         ]
     )
-    train_features = (
-        feature_generator
-        .fit_transform(train_data, tags={'dataset': 'train'})
-        .to_pandas()
+
+    learner = get_model()
+    metrics = cross_validate(
+        generator=features_generator,
+        learner=learner,
+        data=data,
+        target=target
     )
 
     test_features = (
@@ -64,11 +64,20 @@ def main():
     metrics = evaluate(model, features=test_features, target=test_target)
     logger.info(f"Model metrics are:\n{metrics}")
 
+    logging.info(f"Training model...")
+    features_generator, learner = train(
+        generator=features_generator,
+        learner=learner,
+        X=data,
+        y=target,
+        tags={'dataset': 'train'}
+    )
+
     logging.info("Saving generator...")
-    save_generator(feature_generator)
+    save_generator(features_generator)
 
     logging.info("Saving model...")
-    save_model(model)
+    save_model(learner)
 
 
 if __name__ == '__main__':
